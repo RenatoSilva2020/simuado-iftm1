@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulado Preparatório - 9º Ano</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+        .question-card {
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .discipline-tag {
+            display: inline-block;
+            background-color: #3498db;
+            color: #fff;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.85em;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .options {
+            list-style-type: none;
+            padding: 0;
+        }
+        .options li {
+            margin: 10px 0;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .options label {
+            display: block;
+            padding: 12px;
+            cursor: pointer;
+        }
+        .options input[type="radio"] {
+            margin-right: 10px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #2ecc71;
+        }
+        #result-container {
+            display: none;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            border-top: 5px solid #27ae60;
+        }
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .result-item:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Simulado Preparatório</h1>
+    
+    <form id="quizForm">
+        <div id="quizContainer"></div>
+        <button type="button" onclick="calculateResults()">Finalizar Simulado</button>
+    </form>
+
+    <div id="result-container">
+        <h2>Resultado Final</h2>
+        <div id="resultsList"></div>
+        <button style="margin-top: 20px; background-color: #3498db;" onclick="location.reload()">Refazer Simulado</button>
+    </div>
+
+    <script>
+        // Adicione suas questões aqui. O sistema aceita HTML no texto da questão (para imagens ou formatação).
+        const questionsData = [
+            {
+                discipline: "Língua Portuguesa",
+                text: "Assinale a alternativa em que a concordância verbal está de acordo com a norma-padrão:",
+                options: [
+                    { text: "Fazem dois anos que não o vejo.", isCorrect: false },
+                    { text: "Faz dois anos que não o vejo.", isCorrect: true },
+                    { text: "Devem haver muitos casos assim.", isCorrect: false },
+                    { text: "Haviam muitas pessoas lá.", isCorrect: false },
+                    { text: "Vai fazer cinco dias que chove.", isCorrect: false }
+                ]
+            },
+            {
+                discipline: "Matemática",
+                text: "Se uma mercadoria sofre um desconto de 20% e depois um acréscimo de 20% sobre o novo valor, o preço final em relação ao inicial será:",
+                options: [
+                    { text: "Igual ao inicial.", isCorrect: false },
+                    { text: "4% menor.", isCorrect: true },
+                    { text: "4% maior.", isCorrect: false },
+                    { text: "2% menor.", isCorrect: false },
+                    { text: "2% maior.", isCorrect: false }
+                ]
+            },
+            {
+                discipline: "Ciências",
+                text: "A camada de ozônio é essencial para a manutenção da vida na Terra pois:",
+                options: [
+                    { text: "Aumenta o efeito estufa de forma controlada.", isCorrect: false },
+                    { text: "Filtra grande parte da radiação ultravioleta do Sol.", isCorrect: true },
+                    { text: "Produz o oxigênio necessário para a respiração celular.", isCorrect: false },
+                    { text: "Evita a entrada de meteoros na superfície terrestre.", isCorrect: false },
+                    { text: "Controla as correntes marítimas dos oceanos.", isCorrect: false }
+                ]
+            },
+            {
+                discipline: "História",
+                text: "O período regencial brasileiro (1831-1840) foi caracterizado por:",
+                options: [
+                    { text: "Estabilidade política e forte centralização do poder.", isCorrect: false },
+                    { text: "Crescimento industrial acelerado e fim da escravidão.", isCorrect: false },
+                    { text: "Diversas revoltas provinciais, como a Balaiada e a Cabanagem.", isCorrect: true },
+                    { text: "Aliança irrestrita entre liberais e conservadores.", isCorrect: false },
+                    { text: "Declaração imediata da República pelas elites rurais.", isCorrect: false }
+                ]
+            },
+            {
+                discipline: "Geografia",
+                text: "A Região Centro-Oeste do Brasil tem como principal característica econômica recente:",
+                options: [
+                    { text: "A concentração do polo tecnológico aeroespacial.", isCorrect: false },
+                    { text: "A expansão da fronteira agrícola, com destaque para a soja.", isCorrect: true },
+                    { text: "A extração em massa de petróleo na bacia pantaneira.", isCorrect: false },
+                    { text: "O declínio da pecuária extensiva devido à industrialização.", isCorrect: false },
+                    { text: "A produção voltada exclusivamente para a agricultura familiar.", isCorrect: false }
+                ]
+            }
+            // Copie o bloco de chaves {...} acima e cole abaixo com vírgula para adicionar até atingir as 30 questões.
+        ];
+
+        // Função para embaralhar arrays (Fisher-Yates)
+        function shuffleArray(array) {
+            let curId = array.length;
+            while (0 !== curId) {
+                let randId = Math.floor(Math.random() * curId);
+                curId -= 1;
+                let tmp = array[curId];
+                array[curId] = array[randId];
+                array[randId] = tmp;
+            }
+            return array;
+        }
+
+        let shuffledQuestions = [];
+
+        // Inicializa o simulado renderizando as questões e alternativas embaralhadas
+        function renderQuiz() {
+            const container = document.getElementById('quizContainer');
+            
+            // Embaralha a ordem das questões
+            shuffledQuestions = shuffleArray([...questionsData]);
+
+            shuffledQuestions.forEach((q, index) => {
+                // Embaralha as alternativas de cada questão
+                let shuffledOptions = shuffleArray([...q.options]);
+                
+                let questionHTML = `
+                    <div class="question-card">
+                        <span class="discipline-tag">${q.discipline}</span>
+                        <h3>Questão ${index + 1}</h3>
+                        <p>${q.text}</p>
+                        <ul class="options">
+                `;
+
+                shuffledOptions.forEach((opt, optIndex) => {
+                    questionHTML += `
+                        <li>
+                            <label>
+                                <input type="radio" name="q${index}" value="${opt.isCorrect}">
+                                ${opt.text}
+                            </label>
+                        </li>
+                    `;
+                });
+
+                questionHTML += `</ul></div>`;
+                container.innerHTML += questionHTML;
+            });
+        }
+
+        // Calcula o resultado e separa por disciplina
+        function calculateResults() {
+            let scores = {};
+            
+            // Prepara o objeto de pontuação baseado nas disciplinas existentes
+            shuffledQuestions.forEach(q => {
+                if (!scores[q.discipline]) {
+                    scores[q.discipline] = { correct: 0, total: 0 };
+                }
+                scores[q.discipline].total += 1;
+            });
+
+            // Coleta os dados do formulário
+            const form = document.getElementById('quizForm');
+            const formData = new FormData(form);
+            let totalCorrect = 0;
+            let totalQuestions = shuffledQuestions.length;
+
+            shuffledQuestions.forEach((q, index) => {
+                let answer = formData.get(`q${index}`);
+                if (answer === "true") {
+                    scores[q.discipline].correct += 1;
+                    totalCorrect += 1;
+                }
+            });
+
+            // Exibe os resultados
+            document.getElementById('quizForm').style.display = 'none';
+            const resultContainer = document.getElementById('result-container');
+            const resultsList = document.getElementById('resultsList');
+            
+            let html = `
+                <div class="result-item" style="font-size: 1.2em; font-weight: bold; background: #e8f5e9; padding: 15px; border-radius: 4px;">
+                    <span>Pontuação Geral</span>
+                    <span>${totalCorrect} / ${totalQuestions}</span>
+                </div>
+                <br>
+            `;
+
+            for (let discipline in scores) {
+                let data = scores[discipline];
+                let percentage = Math.round((data.correct / data.total) * 100);
+                html += `
+                    <div class="result-item">
+                        <span><strong>${discipline}</strong></span>
+                        <span>${data.correct} / ${data.total} (${percentage}%)</span>
+                    </div>
+                `;
+            }
+
+            resultsList.innerHTML = html;
+            resultContainer.style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        // Carrega as questões ao abrir a página
+        window.onload = renderQuiz;
+    </script>
+</body>
+</html>
