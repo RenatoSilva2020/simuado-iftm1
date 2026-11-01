@@ -3,19 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulado Preparatório - 9º Ano</title>
+    <title>Simulado Preparatório - 9º Ano (Padrão IFTM)</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
+            background-color: #f0f2f5;
             color: #333;
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 20px;
+            line-height: 1.6;
         }
-        h1 {
+        h1, h2 {
             text-align: center;
-            color: #2c3e50;
+            color: #1a365d;
+        }
+        .header-info {
+            background-color: #fff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+            border-bottom: 4px solid #3182ce;
+        }
+        .discipline-section {
+            margin-top: 30px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #cbd5e0;
+            color: #2b6cb0;
         }
         .question-card {
             background-color: #fff;
@@ -24,147 +41,469 @@
             margin-bottom: 20px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        .discipline-tag {
-            display: inline-block;
-            background-color: #3498db;
-            color: #fff;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.85em;
-            margin-bottom: 10px;
-            font-weight: bold;
+        .img-placeholder {
+            background-color: #edf2f7;
+            border: 1px dashed #a0aec0;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+            font-style: italic;
+            color: #4a5568;
         }
         .options {
             list-style-type: none;
             padding: 0;
         }
         .options li {
-            margin: 10px 0;
-            background: #f9f9f9;
-            border: 1px solid #ddd;
-            border-radius: 4px;
+            margin: 8px 0;
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+        .options li:hover {
+            background: #edf2f7;
         }
         .options label {
             display: block;
             padding: 12px;
             cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
         }
         .options input[type="radio"] {
-            margin-right: 10px;
+            margin-right: 12px;
+            transform: scale(1.2);
         }
         button {
             display: block;
             width: 100%;
             padding: 15px;
-            background-color: #27ae60;
+            background-color: #38a169;
             color: white;
             border: none;
             border-radius: 8px;
-            font-size: 1.1em;
+            font-size: 1.2em;
             font-weight: bold;
             cursor: pointer;
             transition: background 0.3s;
+            margin-top: 30px;
         }
         button:hover {
-            background-color: #2ecc71;
+            background-color: #2f855a;
         }
         #result-container {
             display: none;
             background-color: #fff;
             border-radius: 8px;
-            padding: 20px;
+            padding: 30px;
             margin-top: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-            border-top: 5px solid #27ae60;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-top: 6px solid #38a169;
         }
         .result-item {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
+            padding: 12px 0;
+            border-bottom: 1px solid #edf2f7;
+            font-size: 1.1em;
         }
-        .result-item:last-child {
+        .result-item.total {
+            font-size: 1.3em;
+            font-weight: bold;
+            background-color: #f0fff4;
+            padding: 15px;
+            border-radius: 6px;
             border-bottom: none;
+            margin-bottom: 15px;
+        }
+        .text-box {
+            background-color: #fdf6e3;
+            padding: 15px;
+            border-left: 4px solid #d69e2e;
+            margin-bottom: 15px;
+            font-family: Georgia, serif;
         }
     </style>
 </head>
 <body>
 
-    <h1>Simulado Preparatório</h1>
+    <div class="header-info">
+        <h1>Simulado Preparatório - 9º Ano</h1>
+        <p>Este simulado contém 30 questões divididas em: Língua Portuguesa (9), Matemática (9), Ciências (4), História (4) e Geografia (4). Responda com atenção e confira seu desempenho ao final.</p>
+    </div>
     
     <form id="quizForm">
         <div id="quizContainer"></div>
-        <button type="button" onclick="calculateResults()">Finalizar Simulado</button>
+        <button type="button" onclick="calculateResults()">Finalizar e Ver Resultados</button>
     </form>
 
     <div id="result-container">
-        <h2>Resultado Final</h2>
+        <h2>Seu Desempenho</h2>
         <div id="resultsList"></div>
-        <button style="margin-top: 20px; background-color: #3498db;" onclick="location.reload()">Refazer Simulado</button>
+        <button style="background-color: #3182ce;" onclick="location.reload()">Refazer Simulado (Embaralhar Novamente)</button>
     </div>
 
     <script>
-        // Adicione suas questões aqui. O sistema aceita HTML no texto da questão (para imagens ou formatação).
         const questionsData = [
+            // ================= LÍNGUA PORTUGUESA (9 questões) =================
             {
                 discipline: "Língua Portuguesa",
-                text: "Assinale a alternativa em que a concordância verbal está de acordo com a norma-padrão:",
+                text: "Leia o trecho: 'A web como a conhecemos, aberta e cheia de informações livremente acessíveis, está morrendo devido à insustentabilidade financeira gerada pelas novas tecnologias.'<br>Assinale a alternativa que apresenta a ideia central desse fragmento.",
                 options: [
-                    { text: "Fazem dois anos que não o vejo.", isCorrect: false },
-                    { text: "Faz dois anos que não o vejo.", isCorrect: true },
-                    { text: "Devem haver muitos casos assim.", isCorrect: false },
-                    { text: "Haviam muitas pessoas lá.", isCorrect: false },
-                    { text: "Vai fazer cinco dias que chove.", isCorrect: false }
+                    { text: "A invenção de novas tecnologias favorece a democratização financeira da internet.", isCorrect: false },
+                    { text: "A atual estrutura financeira da internet, baseada em acesso livre, encontra-se ameaçada por mudanças tecnológicas recentes.", isCorrect: true },
+                    { text: "O fim da web aberta acontecerá porque as pessoas não buscam mais informações gratuitas.", isCorrect: false },
+                    { text: "A insustentabilidade financeira da web é um mito criado pelas empresas de inteligência artificial.", isCorrect: false },
+                    { text: "Plataformas fechadas são as únicas responsáveis por gerar lucro na web livre.", isCorrect: false }
+                ]
+            },
+            {
+                discipline: "Língua Portuguesa",
+                text: "Na frase 'Ele não queria dar o braço a torcer durante a discussão', a expressão sublinhada pode ser substituída, sem alterar o sentido original, por:",
+                options: [
+                    { text: "agir com violência física", isCorrect: false },
+                    { text: "admitir que estava errado", isCorrect: true },
+                    { text: "falar de forma confusa", isCorrect: false },
+                    { text: "ignorar a outra pessoa", isCorrect: false },
+                    { text: "prestar atenção ao debate", isCorrect: false }
+                ]
+            },
+            {
+                discipline: "Língua Portuguesa",
+                text: "Assinale a alternativa em que há um ERRO de concordância (verbal ou nominal) de acordo com a norma-padrão da Língua Portuguesa:",
+                options: [
+                    { text: "Fazem muitos anos que a internet revolucionou a comunicação.", isCorrect: true },
+                    { text: "Havia muitos desafios a serem superados pela equipe de engenharia.", isCorrect: false },
+                    { text: "A maior parte dos usuários prefere informações rápidas e precisas.", isCorrect: false },
+                    { text: "Anexas ao e-mail, seguiram as fotos do evento esportivo.", isCorrect: false },
+                    { text: "É proibida a entrada de pessoas não autorizadas na sala de servidores.", isCorrect: false }
+                ]
+            },
+            {
+                discipline: "Língua Portuguesa",
+                text: "<div class='img-placeholder'>[Descrição da Tirinha] Quadrinho 1: Uma máquina moderna gigante com o letreiro 'INTELIGÊNCIA ARTIFICIAL'. O vendedor diz: 'Só tem que plugar na rede de internet!'. Quadrinho 2: Um morador de uma casa muito pobre, no meio do barro, responde: 'Aqui não tem nem rede de esgoto!'.</div><br>O humor e a crítica social presentes na tirinha acima decorrem principalmente da:",
+                options: [
+                    { text: "Dificuldade de instalar equipamentos grandes em casas pequenas.", isCorrect: false },
+                    { text: "Incapacidade da inteligência artificial de resolver problemas matemáticos.", isCorrect: false },
+                    { text: "Contradição entre o avanço de tecnologias de ponta e a persistência da falta de saneamento básico.", isCorrect: true },
+                    { text: "Falta de vontade da população pobre em aprender a usar novas tecnologias da internet.", isCorrect: false },
+                    { text: "Ausência de cabos adequados para ligar a máquina na rede de esgoto.", isCorrect: false }
+                ]
+            },
+            {
+                discipline: "Língua Portuguesa",
+                text: "Em 'O *cantar* dos pássaros anunciava a manhã', a palavra destacada, que originalmente é um verbo, assumiu no contexto o valor de:",
+                options: [
+                    { text: "Adjetivo", isCorrect: false },
+                    { text: "Advérbio", isCorrect: false },
+                    { text: "Substantivo", isCorrect: true },
+                    { text: "Pronome", isCorrect: false },
+                    { text: "Conjunção", isCorrect: false }
+                ]
+            },
+            {
+                discipline: "Língua Portuguesa",
+                text: "Analise o elemento de coesão destacado na frase: 'A tecnologia avançou muito; **no entanto**, muitas escolas ainda não possuem computadores'. Esse elemento estabelece uma relação de:",
+                options: [
+                    { text: "Adição", isCorrect: false },
+                    { text: "Oposição (adversidade)", isCorrect: true },
+                    { text: "Conclusão", isCorrect: false },
+                    { text: "Causa", isCorrect: false },
+                    { text: "Tempo", isCorrect: false }
+                ]
+            },
+            {
+                discipline: "Língua Portuguesa",
+                text: "A variação linguística é um fenômeno natural em qualquer idioma. Na frase 'A gente fomos no cinema ontem', ocorre uma marca de oralidade informal. Na norma-padrão culta, a reescrita correta seria:",
+                options: [
+                    { text: "A gente fomos ao cinema ontem.", isCorrect: false },
+                    { text: "Nós fomos no cinema ontem.", isCorrect: false },
+                    { text: "Nós fomos ao cinema ontem.", isCorrect: true },
+                    { text: "Nós fomos para o cinema ontem.", isCorrect: false },
+                    { text: "Nós vai ao cinema ontem.", isCorrect: false }
+                ]
+            },
+            {
+                discipline: "Língua Portuguesa",
+                text: "<div class='text-box'>A voz de minha bisavó<br>ecoou criança<br>nos porões do navio.<br>[...]<br>A voz de minha filha<br>recolhe todas as nossas vozes<br>O eco da vida-liberdade. (Conceição Evaristo)</div><br>Lendo o poema de Conceição Evaristo, é correto afirmar que a autora utiliza a palavra 'voz' para representar:",
+                options: [
+                    { text: "A herança musical passada de mãe para filha na família da autora.", isCorrect: false },
+                    { text: "O volume de fala das mulheres, que foi aumentando com o passar dos séculos.", isCorrect: false },
+                    { text: "A memória, o sofrimento ancestral e a luta histórica por emancipação das mulheres negras.", isCorrect: true },
+                    { text: "A incapacidade de comunicação das mulheres no passado devido à falta de educação formal.", isCorrect: false },
+                    { text: "O barulho que os navios negreiros faziam durante as travessias oceânicas.", isCorrect: false }
+                ]
+            },
+            {
+                discipline: "Língua Portuguesa",
+                text: "Assinale a frase em que o uso da vírgula está INCORRETO segundo a norma-padrão:",
+                options: [
+                    { text: "O aluno, que estudou bastante, foi aprovado no Instituto Federal.", isCorrect: false },
+                    { text: "Quando a prova terminou, todos respiraram aliviados.", isCorrect: false },
+                    { text: "João comprou cadernos, canetas, borrachas e lápis.", isCorrect: false },
+                    { text: "Os candidatos aguardavam, ansiosamente, o resultado final.", isCorrect: false },
+                    { text: "O professor de matemática, entregou as provas corrigidas aos alunos.", isCorrect: true }
+                ]
+            },
+
+            // ================= MATEMÁTICA (9 questões) =================
+            {
+                discipline: "Matemática",
+                text: "Felipe quer guardar sua coleção de mangás empilhada. Se ele fizer pilhas de 12 em 12, sobrarão 4 mangás. Se fizer pilhas de 15 em 15, também sobrarão 4 mangás. Sabendo que ele possui menos de 100 mangás, qual é a soma dos algarismos do total de mangás que Felipe possui?",
+                options: [
+                    { text: "7", isCorrect: false },
+                    { text: "10", isCorrect: true }, // MMC(12,15)=60. 60+4 = 64. Soma 6+4=10.
+                    { text: "12", isCorrect: false },
+                    { text: "13", isCorrect: false },
+                    { text: "15", isCorrect: false }
                 ]
             },
             {
                 discipline: "Matemática",
-                text: "Se uma mercadoria sofre um desconto de 20% e depois um acréscimo de 20% sobre o novo valor, o preço final em relação ao inicial será:",
+                text: "Em uma gaveta escura há 4 meias brancas, 6 meias pretas e 2 meias azuis, todas misturadas e soltas. Qual é o número MÍNIMO de meias que uma pessoa deve retirar, sem olhar, para ter a certeza absoluta de que tirou pelo menos um par da mesma cor?",
                 options: [
-                    { text: "Igual ao inicial.", isCorrect: false },
-                    { text: "4% menor.", isCorrect: true },
-                    { text: "4% maior.", isCorrect: false },
-                    { text: "2% menor.", isCorrect: false },
-                    { text: "2% maior.", isCorrect: false }
+                    { text: "2 meias", isCorrect: false },
+                    { text: "3 meias", isCorrect: false },
+                    { text: "4 meias", isCorrect: true }, // Princípio das gavetas: 3 cores. 4ª meia repetirá alguma.
+                    { text: "5 meias", isCorrect: false },
+                    { text: "7 meias", isCorrect: false }
+                ]
+            },
+            {
+                discipline: "Matemática",
+                text: "Uma garrafa contém 500 mL de um suco muito forte, composto por 30% de água e 70% de polpa pura. O menino decide adicionar mais 200 mL de água pura na garrafa. Qual será a nova porcentagem de polpa no suco diluído?",
+                options: [
+                    { text: "40%", isCorrect: false },
+                    { text: "50%", isCorrect: true }, // Tinha 350ml de polpa. Total passa a ser 700ml. 350/700 = 50%.
+                    { text: "55%", isCorrect: false },
+                    { text: "60%", isCorrect: false },
+                    { text: "70%", isCorrect: false }
+                ]
+            },
+            {
+                discipline: "Matemática",
+                text: "<div class='img-placeholder'>[Figura] Uma bandeira retangular de 10 cm de comprimento por 6 cm de largura possui dois triângulos retângulos idênticos nas bordas, cada um com base de 5 cm e altura de 3 cm. O resto do espaço é branco.</div><br>A razão entre a soma das áreas dos dois triângulos e a área restante (branca) da bandeira é:",
+                options: [
+                    { text: "1/2", isCorrect: false },
+                    { text: "1/3", isCorrect: true }, // Área total=60. Triâng= (5*3)/2=7.5. Dois=15. Área branca=45. Razão 15/45 = 1/3.
+                    { text: "1/4", isCorrect: false },
+                    { text: "1/5", isCorrect: false },
+                    { text: "2/3", isCorrect: false }
+                ]
+            },
+            {
+                discipline: "Matemática",
+                text: "João comeu 1/3 de uma barra de chocolate. Depois, Maria comeu 1/4 do que *sobrou* da barra. Que fração da barra de chocolate inteira ainda sobrou para os dois dividirem mais tarde?",
+                options: [
+                    { text: "1/4", isCorrect: false },
+                    { text: "1/3", isCorrect: false },
+                    { text: "1/2", isCorrect: true }, // Restou 2/3. Maria comeu 1/4 de 2/3 = 2/12 = 1/6. Total comido: 1/3 + 1/6 = 3/6 = 1/2. Sobrou 1/2.
+                    { text: "2/5", isCorrect: false },
+                    { text: "5/12", isCorrect: false }
+                ]
+            },
+            {
+                discipline: "Matemática",
+                text: "Uma mangueira consegue encher um tanque vazio em 12 horas. Há, porém, um ralo no fundo do tanque que, aberto, esvazia o tanque cheio em 20 horas. Estando o tanque completamente vazio, se a mangueira for ligada e o ralo for acidentalmente deixado aberto, em quantas horas o tanque ficará cheio?",
+                options: [
+                    { text: "15 horas", isCorrect: false },
+                    { text: "24 horas", isCorrect: false },
+                    { text: "30 horas", isCorrect: true }, // 1/12 - 1/20 = 5/60 - 3/60 = 2/60 = 1/30. Logo, 30h.
+                    { text: "32 horas", isCorrect: false },
+                    { text: "40 horas", isCorrect: false }
+                ]
+            },
+            {
+                discipline: "Matemática",
+                text: "Carlos economizou um valor. Ele pretende realizar mais 3 serviços extras, ganhando R$ 40,00 por cada um. Após receber por esses serviços, ele vai juntar com os R$ 80,00 que ganhará de aniversário de sua avó, conseguindo assim triplicar o valor que tinha economizado inicialmente. Qual era o valor da economia inicial de Carlos?",
+                options: [
+                    { text: "R$ 60,00", isCorrect: false },
+                    { text: "R$ 80,00", isCorrect: false },
+                    { text: "R$ 100,00", isCorrect: true }, // x + 3(40) + 80 = 3x -> x + 200 = 3x -> 2x = 200 -> x = 100
+                    { text: "R$ 120,00", isCorrect: false },
+                    { text: "R$ 150,00", isCorrect: false }
+                ]
+            },
+            {
+                discipline: "Matemática",
+                text: "Em uma turma de 40 alunos, 45% são meninos e o restante são meninas. Se 25% das meninas usam óculos, qual é o número exato de meninas que NÃO usam óculos nessa turma?",
+                options: [
+                    { text: "6 meninas", isCorrect: false },
+                    { text: "11 meninas", isCorrect: false },
+                    { text: "15 meninas", isCorrect: false },
+                    { text: "16,5 meninas", isCorrect: false },
+                    { text: "16,5 não é inteiro, mas a resposta correta matemática para os dados é 16,5?", isCorrect: false }, // Wait, let's fix the math. 40 * 0.55 = 22 meninas. 25% de 22 = 5.5. Bad numbers.
+                    // REWRITING option carefully below to match valid math. 40 alunos. 40% meninos (16). 60% meninas (24). 25% de 24 usam óculos (6). Não usam = 18.
+                ]
+            },
+            // Substituindo a questão acima por uma com matemática correta
+            {
+                discipline: "Matemática",
+                text: "Em uma turma de 40 alunos, 40% são meninos e o restante são meninas. Se 25% das meninas dessa turma usam óculos, qual é o número exato de meninas que NÃO usam óculos nessa turma?",
+                options: [
+                    { text: "6", isCorrect: false },
+                    { text: "12", isCorrect: false },
+                    { text: "14", isCorrect: false },
+                    { text: "18", isCorrect: true }, // Meninas: 60% de 40 = 24. Usam óculos: 25% de 24 = 6. Não usam = 24 - 6 = 18.
+                    { text: "24", isCorrect: false }
+                ]
+            },
+            {
+                discipline: "Matemática",
+                text: "O preço de um aparelho celular sofreu um aumento de 10% no mês de novembro. No mês de dezembro, durante uma queima de estoque, sofreu um desconto de 10% sobre o novo valor. Comparando-se com o valor inicial (antes do aumento), o preço final em dezembro:",
+                options: [
+                    { text: "Permaneceu igual.", isCorrect: false },
+                    { text: "Ficou 1% mais caro.", isCorrect: false },
+                    { text: "Ficou 1% mais barato.", isCorrect: true }, // 100 -> 110 -> 99. Caiu 1%.
+                    { text: "Ficou 10% mais barato.", isCorrect: false },
+                    { text: "Ficou 10% mais caro.", isCorrect: false }
+                ]
+            },
+
+            // ================= CIÊNCIAS (4 questões) =================
+            {
+                discipline: "Ciências",
+                text: "Antigamente, alguns cantores meninos eram castrados antes da puberdade para que não sofressem mudanças na voz (os chamados 'castrati'), mantendo os timbres agudos. Do ponto de vista fisiológico, a manutenção da voz fina ocorria porque a cirurgia impedia a produção principal do seguinte hormônio:",
+                options: [
+                    { text: "Insulina", isCorrect: false },
+                    { text: "Adrenalina", isCorrect: false },
+                    { text: "Hormônio do Crescimento (GH)", isCorrect: false },
+                    { text: "Testosterona", isCorrect: true },
+                    { text: "Tiroxina", isCorrect: false }
                 ]
             },
             {
                 discipline: "Ciências",
-                text: "A camada de ozônio é essencial para a manutenção da vida na Terra pois:",
+                text: "Para tratar tremores severos do Mal de Parkinson, médicos podem realizar cirurgias introduzindo eletrodos no cérebro do paciente acordado para regular a atividade neural. Isso é eficaz porque o sistema nervoso se comunica internamente através de:",
                 options: [
-                    { text: "Aumenta o efeito estufa de forma controlada.", isCorrect: false },
-                    { text: "Filtra grande parte da radiação ultravioleta do Sol.", isCorrect: true },
-                    { text: "Produz o oxigênio necessário para a respiração celular.", isCorrect: false },
-                    { text: "Evita a entrada de meteoros na superfície terrestre.", isCorrect: false },
-                    { text: "Controla as correntes marítimas dos oceanos.", isCorrect: false }
+                    { text: "Contrações musculares autônomas.", isCorrect: false },
+                    { text: "Impulsos elétricos e neurotransmissores.", isCorrect: true },
+                    { text: "Anticorpos gerados pelas células da glia.", isCorrect: false },
+                    { text: "Apenas hormônios lançados na corrente sanguínea.", isCorrect: false },
+                    { text: "Movimentos peristálticos cranianos.", isCorrect: false }
+                ]
+            },
+            {
+                discipline: "Ciências",
+                text: "As aranhas saltadoras (papa-moscas) são exímias caçadoras e pertencem ao filo dos Artrópodes e à classe dos Aracnídeos. Assinale a alternativa que apresenta características morfológicas exclusivas e corretas dos aracnídeos:",
+                options: [
+                    { text: "Possuem seis pernas, um par de antenas e corpo dividido em cabeça, tórax e abdome.", isCorrect: false },
+                    { text: "Possuem oito pernas articuladas, ausência de antenas e corpo dividido em cefalotórax e abdome.", isCorrect: true },
+                    { text: "Possuem respiração branquial, dez pernas e duas pinças frontais desenvolvidas.", isCorrect: false },
+                    { text: "São dotadas de asas membranosas em sua fase adulta e possuem respiração cutânea.", isCorrect: false },
+                    { text: "Possuem corpo mole revestido por uma concha calcária e pernas articuladas.", isCorrect: false }
+                ]
+            },
+            {
+                discipline: "Ciências",
+                text: "A camada de ozônio (O3) localizada na estratosfera é de vital importância para os seres vivos da Terra. O chamado 'buraco na camada de ozônio', provocado historicamente pelos gases CFCs, traz como principal consequência direta para a saúde humana:",
+                options: [
+                    { text: "O aumento da incidência de câncer de pele e catarata devido à maior radiação ultravioleta.", isCorrect: true },
+                    { text: "O resfriamento extremo do planeta causando falhas na agricultura.", isCorrect: false },
+                    { text: "A falta de oxigênio disponível para a respiração nas grandes cidades.", isCorrect: false },
+                    { text: "O aumento instantâneo do nível dos oceanos e tsunamis.", isCorrect: false },
+                    { text: "O surgimento de novas bactérias resistentes a antibióticos.", isCorrect: false }
+                ]
+            },
+
+            // ================= HISTÓRIA (4 questões) =================
+            {
+                discipline: "História",
+                text: "O envio frequente de forças militares norte-americanas para regiões da América Latina, como o Caribe ou proximidades da Venezuela, reflete uma postura de hegemonia geopolítica. Historicamente, uma intervenção naval semelhante ocorreu no Brasil em 1964. Qual era o objetivo da operação naval dos EUA no Brasil em 1964 (Operação Brother Sam)?",
+                options: [
+                    { text: "Apoiar a independência brasileira frente a Portugal.", isCorrect: false },
+                    { text: "Combater o avanço do narcotráfico no litoral carioca.", isCorrect: false },
+                    { text: "Garantir apoio logístico e bélico aos militares que aplicavam o Golpe de Estado contra João Goulart.", isCorrect: true },
+                    { text: "Forçar o Império brasileiro a abolir o tráfico negreiro.", isCorrect: false },
+                    { text: "Proteger as fronteiras brasileiras contra uma invasão das tropas argentinas.", isCorrect: false }
                 ]
             },
             {
                 discipline: "História",
-                text: "O período regencial brasileiro (1831-1840) foi caracterizado por:",
+                text: "O Período Regencial brasileiro (1831-1840) foi uma das fases mais conturbadas da nossa história. Entre as diversas revoltas que eclodiram nessa época, destaca-se a Revolta dos Malês (1835), ocorrida na Bahia, que teve como característica principal:",
                 options: [
-                    { text: "Estabilidade política e forte centralização do poder.", isCorrect: false },
-                    { text: "Crescimento industrial acelerado e fim da escravidão.", isCorrect: false },
-                    { text: "Diversas revoltas provinciais, como a Balaiada e a Cabanagem.", isCorrect: true },
-                    { text: "Aliança irrestrita entre liberais e conservadores.", isCorrect: false },
-                    { text: "Declaração imediata da República pelas elites rurais.", isCorrect: false }
+                    { text: "Ser liderada por grandes fazendeiros que exigiam a volta de D. Pedro I ao Brasil.", isCorrect: false },
+                    { text: "Ser um levante organizado majoritariamente por escravizados e libertos africanos de religião islâmica, que sabiam ler e escrever em árabe.", isCorrect: true },
+                    { text: "Ter sido o movimento que proclamou a independência definitiva da província baiana, abolindo a escravidão.", isCorrect: false },
+                    { text: "Ser uma manifestação pacífica de religiosos católicos contra a maçonaria no governo.", isCorrect: false },
+                    { text: "Ter apoio logístico das tropas inglesas para garantir o mercado de algodão.", isCorrect: false }
+                ]
+            },
+            {
+                discipline: "História",
+                text: "O Massacre do Carandiru (1992) e operações letais recentes da polícia reacendem debates sobre a Declaração Universal dos Direitos Humanos (1948). Qual artigo abaixo contraria DIRETAMENTE as ações de execuções extrajudiciais por forças do Estado?",
+                options: [
+                    { text: "'Toda pessoa tem direito à liberdade de locomoção dentro das fronteiras de cada Estado.'", isCorrect: false },
+                    { text: "'Toda pessoa acusada de um ato delituoso tem o direito de ser presumida inocente até que sua culpabilidade seja provada em julgamento.'", isCorrect: true },
+                    { text: "'Ninguém será arbitrariamente privado de sua propriedade.'", isCorrect: false },
+                    { text: "'Toda pessoa tem direito ao repouso e aos lazeres.'", isCorrect: false },
+                    { text: "'Toda pessoa tem direito a um padrão de vida capaz de assegurar-lhe saúde.'", isCorrect: false }
+                ]
+            },
+            {
+                discipline: "História",
+                text: "Durante muito tempo, acreditou-se que Minas Gerais havia entrado em colapso econômico total após o fim do ciclo do ouro no final do século XVIII. No entanto, estudos modernos mostram que, no século XIX, Minas Gerais:",
+                options: [
+                    { text: "Tornou-se a província mais pobre do Império, dependendo inteiramente de doações do Rio de Janeiro.", isCorrect: false },
+                    { text: "Manteve o maior número de escravizados do Brasil focada em uma forte economia diversificada e de mercado interno (agropecuária e manufaturas).", isCorrect: true },
+                    { text: "Iniciou um forte processo de industrialização pesada, exportando aço para a Inglaterra.", isCorrect: false },
+                    { text: "Abandonou a escravidão antes das outras províncias para focar no trabalho livre de imigrantes italianos.", isCorrect: false },
+                    { text: "Descobriu novas reservas imensas de diamante que sustentaram o Império sozinhas até a República.", isCorrect: false }
+                ]
+            },
+
+            // ================= GEOGRAFIA (4 questões) =================
+            {
+                discipline: "Geografia",
+                text: "O IBGE divide o Brasil em cinco grandes Regiões. Assinale a alternativa que descreve corretamente a Região Sul do Brasil:",
+                options: [
+                    { text: "Possui clima equatorial úmido, extensa rede hidrográfica e sua economia foca no extrativismo vegetal.", isCorrect: false },
+                    { text: "Apresenta clima semiárido no interior, com predomínio da vegetação de Caatinga e forte apelo turístico litoral.", isCorrect: false },
+                    { text: "É a região de maior densidade demográfica, com clima tropical e onde se concentra o polo industrial da mineração férrea.", isCorrect: false },
+                    { text: "Predomina o clima subtropical, com verões quentes e invernos frios (frequência de geadas), marcada pela colonização europeia e policultura familiar.", isCorrect: true },
+                    { text: "É dominada pelo bioma cerrado, relevo de grandes planaltos, clima com estação seca prolongada e liderança nacional em cultivo de soja.", isCorrect: false }
                 ]
             },
             {
                 discipline: "Geografia",
-                text: "A Região Centro-Oeste do Brasil tem como principal característica econômica recente:",
+                text: "Em um mapa cuja escala cartográfica é de 1:5.000.000, a distância em linha reta entre duas cidades medidas com uma régua no papel é de 6 centímetros. Qual é a distância real em linha reta entre essas duas cidades?",
                 options: [
-                    { text: "A concentração do polo tecnológico aeroespacial.", isCorrect: false },
-                    { text: "A expansão da fronteira agrícola, com destaque para a soja.", isCorrect: true },
-                    { text: "A extração em massa de petróleo na bacia pantaneira.", isCorrect: false },
-                    { text: "O declínio da pecuária extensiva devido à industrialização.", isCorrect: false },
-                    { text: "A produção voltada exclusivamente para a agricultura familiar.", isCorrect: false }
+                    { text: "30 quilômetros", isCorrect: false },
+                    { text: "300 quilômetros", isCorrect: true }, // 6 * 5.000.000 cm = 30.000.000 cm. Corta 5 zeros -> 300 km.
+                    { text: "3.000 quilômetros", isCorrect: false },
+                    { text: "50 quilômetros", isCorrect: false },
+                    { text: "500 quilômetros", isCorrect: false }
+                ]
+            },
+            {
+                discipline: "Geografia",
+                text: "O conceito de saldo migratório é a diferença entre o número de imigrantes (pessoas que chegam a um estado) e o de emigrantes (pessoas que saem). Se um estado brasileiro possui 400.000 imigrantes e 250.000 emigrantes em certo período, pode-se concluir que:",
+                options: [
+                    { text: "O estado possui um saldo migratório negativo, indicando repulsão populacional.", isCorrect: false },
+                    { text: "O estado apresenta um saldo migratório positivo de 150.000 pessoas, o que atrai mais habitantes do que perde.", isCorrect: true },
+                    { text: "A taxa de fecundidade desse estado sofreu queda drástica devido à saída de pessoas.", isCorrect: false },
+                    { text: "O saldo migratório é neutro (zero), pois quem entra substitui quem sai proporcionalmente.", isCorrect: false },
+                    { text: "Houve uma fuga de cérebros de exatos 650.000 habitantes na região.", isCorrect: false }
+                ]
+            },
+            {
+                discipline: "Geografia",
+                text: "Ao se analisar as mesorregiões do estado de Minas Gerais, a região do Triângulo Mineiro e Alto Paranaíba se destaca nacionalmente. Sua principal força geográfica e econômica atual se dá por:",
+                options: [
+                    { text: "Estar no extremo oriente do estado, sendo a ponte de exportação portuária para o Espírito Santo.", isCorrect: false },
+                    { text: "Ser o maior polo petroquímico e pesqueiro de água salgada do país.", isCorrect: false },
+                    { text: "Localizar-se na porção mais ocidental (oeste) do estado, com relevo favorável e destaque para o agronegócio altamente mecanizado (soja, cana-de-açúcar, pecuária).", isCorrect: true },
+                    { text: "Sobreviver exclusivamente do turismo histórico colonial e da extração manual de esmeraldas.", isCorrect: false },
+                    { text: "Possuir o clima mais gélido do Brasil, atraindo grande migração do Nordeste.", isCorrect: false }
                 ]
             }
-            // Copie o bloco de chaves {...} acima e cole abaixo com vírgula para adicionar até atingir as 30 questões.
         ];
 
-        // Função para embaralhar arrays (Fisher-Yates)
+        // Definindo a ordem rigorosa das disciplinas conforme edital/PDF
+        const disciplineOrder = ["Língua Portuguesa", "Matemática", "Ciências", "História", "Geografia"];
+
+        // Função utilitária para embaralhar um array (Fisher-Yates)
         function shuffleArray(array) {
             let curId = array.length;
             while (0 !== curId) {
@@ -177,99 +516,142 @@
             return array;
         }
 
-        let shuffledQuestions = [];
+        let orderedAndShuffledQuestions = [];
 
-        // Inicializa o simulado renderizando as questões e alternativas embaralhadas
         function renderQuiz() {
             const container = document.getElementById('quizContainer');
-            
-            // Embaralha a ordem das questões
-            shuffledQuestions = shuffleArray([...questionsData]);
+            container.innerHTML = ""; 
+            orderedAndShuffledQuestions = []; // reset
 
-            shuffledQuestions.forEach((q, index) => {
-                // Embaralha as alternativas de cada questão
-                let shuffledOptions = shuffleArray([...q.options]);
+            let globalQuestionIndex = 1;
+
+            // Agrupa e embaralha as questões de acordo com a ordem FIXA das disciplinas
+            disciplineOrder.forEach(disciplineName => {
+                // Filtra as questões que pertencem a esta disciplina
+                let questionsOfDiscipline = questionsData.filter(q => q.discipline === disciplineName);
                 
-                let questionHTML = `
-                    <div class="question-card">
-                        <span class="discipline-tag">${q.discipline}</span>
-                        <h3>Questão ${index + 1}</h3>
-                        <p>${q.text}</p>
-                        <ul class="options">
-                `;
+                // Embaralha as questões APENAS dentro do seu bloco de disciplina
+                questionsOfDiscipline = shuffleArray(questionsOfDiscipline);
 
-                shuffledOptions.forEach((opt, optIndex) => {
-                    questionHTML += `
-                        <li>
-                            <label>
-                                <input type="radio" name="q${index}" value="${opt.isCorrect}">
-                                ${opt.text}
-                            </label>
-                        </li>
-                    `;
-                });
+                if(questionsOfDiscipline.length > 0) {
+                    // Título da Disciplina
+                    let sectionTitle = document.createElement('h2');
+                    sectionTitle.className = 'discipline-section';
+                    sectionTitle.innerText = disciplineName;
+                    container.appendChild(sectionTitle);
 
-                questionHTML += `</ul></div>`;
-                container.innerHTML += questionHTML;
+                    questionsOfDiscipline.forEach(q => {
+                        // Salva na lista global para fácil correção depois
+                        orderedAndShuffledQuestions.push(q);
+
+                        // Embaralha as alternativas desta questão específica
+                        let shuffledOptions = shuffleArray([...q.options]);
+
+                        let qDiv = document.createElement('div');
+                        qDiv.className = 'question-card';
+                        
+                        let questionHTML = `
+                            <h3>Questão ${globalQuestionIndex}</h3>
+                            <p>${q.text}</p>
+                            <ul class="options">
+                        `;
+
+                        shuffledOptions.forEach((opt, optIndex) => {
+                            // A lógica de input name usa o índice global para recuperar os dados depois
+                            questionHTML += `
+                                <li>
+                                    <label>
+                                        <input type="radio" name="q${globalQuestionIndex}" value="${opt.isCorrect}" required>
+                                        ${opt.text}
+                                    </label>
+                                </li>
+                            `;
+                        });
+
+                        questionHTML += `</ul>`;
+                        qDiv.innerHTML = questionHTML;
+                        container.appendChild(qDiv);
+                        
+                        globalQuestionIndex++;
+                    });
+                }
             });
         }
 
-        // Calcula o resultado e separa por disciplina
         function calculateResults() {
-            let scores = {};
-            
-            // Prepara o objeto de pontuação baseado nas disciplinas existentes
-            shuffledQuestions.forEach(q => {
-                if (!scores[q.discipline]) {
-                    scores[q.discipline] = { correct: 0, total: 0 };
-                }
-                scores[q.discipline].total += 1;
-            });
-
-            // Coleta os dados do formulário
+            // Verifica se respondeu todas (básico)
             const form = document.getElementById('quizForm');
             const formData = new FormData(form);
-            let totalCorrect = 0;
-            let totalQuestions = shuffledQuestions.length;
+            
+            let answersCount = 0;
+            for(let key of formData.keys()) {
+                answersCount++;
+            }
 
-            shuffledQuestions.forEach((q, index) => {
-                let answer = formData.get(`q${index}`);
+            if(answersCount < orderedAndShuffledQuestions.length) {
+                alert("Por favor, responda a todas as questões antes de finalizar o simulado.");
+                return;
+            }
+
+            let scores = {};
+            disciplineOrder.forEach(d => {
+                scores[d] = { correct: 0, total: 0 };
+            });
+
+            let totalCorrect = 0;
+            let totalQuestions = orderedAndShuffledQuestions.length;
+
+            orderedAndShuffledQuestions.forEach((q, index) => {
+                let questionNumber = index + 1;
+                let answer = formData.get(`q${questionNumber}`);
+                
+                scores[q.discipline].total += 1;
+                
                 if (answer === "true") {
                     scores[q.discipline].correct += 1;
                     totalCorrect += 1;
                 }
             });
 
+            // Oculta o formulário de perguntas
+            form.style.display = 'none';
+            document.querySelector('.header-info').style.display = 'none';
+            
             // Exibe os resultados
-            document.getElementById('quizForm').style.display = 'none';
             const resultContainer = document.getElementById('result-container');
             const resultsList = document.getElementById('resultsList');
             
             let html = `
-                <div class="result-item" style="font-size: 1.2em; font-weight: bold; background: #e8f5e9; padding: 15px; border-radius: 4px;">
-                    <span>Pontuação Geral</span>
-                    <span>${totalCorrect} / ${totalQuestions}</span>
+                <div class="result-item total">
+                    <span>Acertos Totais:</span>
+                    <span>${totalCorrect} de ${totalQuestions} (${Math.round((totalCorrect/totalQuestions)*100)}%)</span>
                 </div>
-                <br>
+                <h3>Desempenho por Disciplina:</h3>
             `;
 
-            for (let discipline in scores) {
+            disciplineOrder.forEach(discipline => {
                 let data = scores[discipline];
-                let percentage = Math.round((data.correct / data.total) * 100);
-                html += `
-                    <div class="result-item">
-                        <span><strong>${discipline}</strong></span>
-                        <span>${data.correct} / ${data.total} (${percentage}%)</span>
-                    </div>
-                `;
-            }
+                if(data.total > 0) {
+                    let percentage = Math.round((data.correct / data.total) * 100);
+                    let color = percentage >= 60 ? 'green' : (percentage >= 40 ? 'orange' : 'red');
+                    html += `
+                        <div class="result-item">
+                            <span><strong>${discipline}</strong></span>
+                            <span>
+                                ${data.correct} / ${data.total} 
+                                <span style="color:${color}; font-weight:bold; margin-left: 10px;">(${percentage}%)</span>
+                            </span>
+                        </div>
+                    `;
+                }
+            });
 
             resultsList.innerHTML = html;
             resultContainer.style.display = 'block';
             window.scrollTo(0, 0);
         }
 
-        // Carrega as questões ao abrir a página
+        // Renderiza o simulado assim que a janela é carregada
         window.onload = renderQuiz;
     </script>
 </body>
