@@ -41,15 +41,6 @@
             margin-bottom: 20px;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
-        .img-placeholder {
-            background-color: #edf2f7;
-            border: 1px dashed #a0aec0;
-            padding: 15px;
-            border-radius: 6px;
-            margin: 10px 0;
-            font-style: italic;
-            color: #4a5568;
-        }
         .options {
             list-style-type: none;
             padding: 0;
@@ -124,6 +115,14 @@
             margin-bottom: 15px;
             font-family: Georgia, serif;
         }
+        .question-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            margin: 15px auto;
+            display: block;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
     </style>
 </head>
 <body>
@@ -182,7 +181,7 @@
             },
             {
                 discipline: "Língua Portuguesa",
-                text: "<div class='img-placeholder'>[Descrição da Tirinha] Quadrinho 1: Uma máquina moderna gigante com o letreiro 'INTELIGÊNCIA ARTIFICIAL'. O vendedor diz: 'Só tem que plugar na rede de internet!'. Quadrinho 2: Um morador de uma casa muito pobre, no meio do barro, responde: 'Aqui não tem nem rede de esgoto!'.</div><br>O humor e a crítica social presentes na tirinha acima decorrem principalmente da:",
+                text: "<img src='https://i.ibb.co/zh2d5ct6/Q6.png' alt='Tirinha sobre Inteligência Artificial' class='question-img'><br>O humor e a crítica social presentes na tirinha acima decorrem principalmente da:",
                 options: [
                     { text: "Dificuldade de instalar equipamentos grandes em casas pequenas.", isCorrect: false },
                     { text: "Incapacidade da inteligência artificial de resolver problemas matemáticos.", isCorrect: false },
@@ -253,7 +252,7 @@
                 text: "Felipe quer guardar sua coleção de mangás empilhada. Se ele fizer pilhas de 12 em 12, sobrarão 4 mangás. Se fizer pilhas de 15 em 15, também sobrarão 4 mangás. Sabendo que ele possui menos de 100 mangás, qual é a soma dos algarismos do total de mangás que Felipe possui?",
                 options: [
                     { text: "7", isCorrect: false },
-                    { text: "10", isCorrect: true }, // MMC(12,15)=60. 60+4 = 64. Soma 6+4=10.
+                    { text: "10", isCorrect: true }, 
                     { text: "12", isCorrect: false },
                     { text: "13", isCorrect: false },
                     { text: "15", isCorrect: false }
@@ -265,7 +264,7 @@
                 options: [
                     { text: "2 meias", isCorrect: false },
                     { text: "3 meias", isCorrect: false },
-                    { text: "4 meias", isCorrect: true }, // Princípio das gavetas: 3 cores. 4ª meia repetirá alguma.
+                    { text: "4 meias", isCorrect: true }, 
                     { text: "5 meias", isCorrect: false },
                     { text: "7 meias", isCorrect: false }
                 ]
@@ -275,7 +274,7 @@
                 text: "Uma garrafa contém 500 mL de um suco muito forte, composto por 30% de água e 70% de polpa pura. O menino decide adicionar mais 200 mL de água pura na garrafa. Qual será a nova porcentagem de polpa no suco diluído?",
                 options: [
                     { text: "40%", isCorrect: false },
-                    { text: "50%", isCorrect: true }, // Tinha 350ml de polpa. Total passa a ser 700ml. 350/700 = 50%.
+                    { text: "50%", isCorrect: true }, 
                     { text: "55%", isCorrect: false },
                     { text: "60%", isCorrect: false },
                     { text: "70%", isCorrect: false }
@@ -283,10 +282,10 @@
             },
             {
                 discipline: "Matemática",
-                text: "<div class='img-placeholder'>[Figura] Uma bandeira retangular de 10 cm de comprimento por 6 cm de largura possui dois triângulos retângulos idênticos nas bordas, cada um com base de 5 cm e altura de 3 cm. O resto do espaço é branco.</div><br>A razão entre a soma das áreas dos dois triângulos e a área restante (branca) da bandeira é:",
+                text: "<img src='https://i.ibb.co/sJPc7KCS/Q16.png' alt='Figura de uma bandeira retangular' class='question-img'><br>A razão entre a soma das áreas dos dois triângulos e a área restante (branca) da bandeira é:",
                 options: [
                     { text: "1/2", isCorrect: false },
-                    { text: "1/3", isCorrect: true }, // Área total=60. Triâng= (5*3)/2=7.5. Dois=15. Área branca=45. Razão 15/45 = 1/3.
+                    { text: "1/3", isCorrect: true }, 
                     { text: "1/4", isCorrect: false },
                     { text: "1/5", isCorrect: false },
                     { text: "2/3", isCorrect: false }
@@ -298,7 +297,7 @@
                 options: [
                     { text: "1/4", isCorrect: false },
                     { text: "1/3", isCorrect: false },
-                    { text: "1/2", isCorrect: true }, // Restou 2/3. Maria comeu 1/4 de 2/3 = 2/12 = 1/6. Total comido: 1/3 + 1/6 = 3/6 = 1/2. Sobrou 1/2.
+                    { text: "1/2", isCorrect: true }, 
                     { text: "2/5", isCorrect: false },
                     { text: "5/12", isCorrect: false }
                 ]
@@ -309,7 +308,7 @@
                 options: [
                     { text: "15 horas", isCorrect: false },
                     { text: "24 horas", isCorrect: false },
-                    { text: "30 horas", isCorrect: true }, // 1/12 - 1/20 = 5/60 - 3/60 = 2/60 = 1/30. Logo, 30h.
+                    { text: "30 horas", isCorrect: true }, 
                     { text: "32 horas", isCorrect: false },
                     { text: "40 horas", isCorrect: false }
                 ]
@@ -320,24 +319,11 @@
                 options: [
                     { text: "R$ 60,00", isCorrect: false },
                     { text: "R$ 80,00", isCorrect: false },
-                    { text: "R$ 100,00", isCorrect: true }, // x + 3(40) + 80 = 3x -> x + 200 = 3x -> 2x = 200 -> x = 100
+                    { text: "R$ 100,00", isCorrect: true }, 
                     { text: "R$ 120,00", isCorrect: false },
                     { text: "R$ 150,00", isCorrect: false }
                 ]
             },
-            {
-                discipline: "Matemática",
-                text: "Em uma turma de 40 alunos, 45% são meninos e o restante são meninas. Se 25% das meninas usam óculos, qual é o número exato de meninas que NÃO usam óculos nessa turma?",
-                options: [
-                    { text: "6 meninas", isCorrect: false },
-                    { text: "11 meninas", isCorrect: false },
-                    { text: "15 meninas", isCorrect: false },
-                    { text: "16,5 meninas", isCorrect: false },
-                    { text: "16,5 não é inteiro, mas a resposta correta matemática para os dados é 16,5?", isCorrect: false }, // Wait, let's fix the math. 40 * 0.55 = 22 meninas. 25% de 22 = 5.5. Bad numbers.
-                    // REWRITING option carefully below to match valid math. 40 alunos. 40% meninos (16). 60% meninas (24). 25% de 24 usam óculos (6). Não usam = 18.
-                ]
-            },
-            // Substituindo a questão acima por uma com matemática correta
             {
                 discipline: "Matemática",
                 text: "Em uma turma de 40 alunos, 40% são meninos e o restante são meninas. Se 25% das meninas dessa turma usam óculos, qual é o número exato de meninas que NÃO usam óculos nessa turma?",
@@ -345,7 +331,7 @@
                     { text: "6", isCorrect: false },
                     { text: "12", isCorrect: false },
                     { text: "14", isCorrect: false },
-                    { text: "18", isCorrect: true }, // Meninas: 60% de 40 = 24. Usam óculos: 25% de 24 = 6. Não usam = 24 - 6 = 18.
+                    { text: "18", isCorrect: true },
                     { text: "24", isCorrect: false }
                 ]
             },
@@ -355,7 +341,7 @@
                 options: [
                     { text: "Permaneceu igual.", isCorrect: false },
                     { text: "Ficou 1% mais caro.", isCorrect: false },
-                    { text: "Ficou 1% mais barato.", isCorrect: true }, // 100 -> 110 -> 99. Caiu 1%.
+                    { text: "Ficou 1% mais barato.", isCorrect: true }, 
                     { text: "Ficou 10% mais barato.", isCorrect: false },
                     { text: "Ficou 10% mais caro.", isCorrect: false }
                 ]
@@ -470,7 +456,7 @@
                 text: "Em um mapa cuja escala cartográfica é de 1:5.000.000, a distância em linha reta entre duas cidades medidas com uma régua no papel é de 6 centímetros. Qual é a distância real em linha reta entre essas duas cidades?",
                 options: [
                     { text: "30 quilômetros", isCorrect: false },
-                    { text: "300 quilômetros", isCorrect: true }, // 6 * 5.000.000 cm = 30.000.000 cm. Corta 5 zeros -> 300 km.
+                    { text: "300 quilômetros", isCorrect: true }, 
                     { text: "3.000 quilômetros", isCorrect: false },
                     { text: "50 quilômetros", isCorrect: false },
                     { text: "500 quilômetros", isCorrect: false }
